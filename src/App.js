@@ -3,10 +3,17 @@ import data from "./data";
 import Articolo from "./Articolo";
 
 //Funzione che se presente 'Theme' nel localStorage
+const getThemeValue = () => {
+  if (localStorage.getItem("theme")) {
+    return localStorage.getItem("theme");
+  } else {
+    return "light-mode";
+  }
+};
 // returna il suo valore o di default return 'light-mode'
 
 function App() {
-  const [theme, setTheme] = useState("light-mode");
+  const [theme, setTheme] = useState(getThemeValue() || "light-mode");
 
   const changeTheme = () => {
     if (theme === "light-mode") {
@@ -18,6 +25,7 @@ function App() {
 
   useEffect(() => {
     document.documentElement.className = theme;
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   return (
